@@ -31,8 +31,14 @@ public class Player extends Entity{
     public void getPlayerImage() {
         try {
             stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterStand.png")));
+            standLeft = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterStandLeft.png")));
+            standRight = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterStandRight.png")));
             down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterWalkFront1.png")));
             down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterWalkFront2.png")));
+            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterWalkLeft1.png")));
+            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterWalkRight1.png")));
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,6 +85,12 @@ public class Player extends Entity{
         switch (direction) {
             case "down":
                 characterImage = (spriteNum == 1) ? down1 : (spriteNum == 2) ? stand : (spriteNum == 3) ? down2 : stand;
+                break;
+            case "left":
+                characterImage = (spriteNum > 2) ? left1 : standLeft;
+                break;
+            case "right":
+                characterImage = (spriteNum > 2) ? right1 : standRight;
                 break;
             case "standing":
                 characterImage = stand;
