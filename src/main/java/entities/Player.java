@@ -25,7 +25,7 @@ public class Player extends Entity{
     public void setEntityValues() {
         x = 100;
         y = 100;
-        speed = 3;
+        speed = 2;
     }
 
     public void getPlayerImage() {
@@ -56,40 +56,47 @@ public class Player extends Entity{
     }
 
     public void update() {
-        direction = "standing";
+        boolean isMoving = false;
 
         if (keyHandler.upPressed) {
-            y -= speed;
+            y -= keyHandler.sprinting ? (speed * 2) : speed;
             direction = "up";
+            isMoving = true;
         }
 
         if (keyHandler.downPressed) {
-            y += speed;
+            y += keyHandler.sprinting ? (speed * 2) : speed;
             direction = "down";
+            isMoving = true;
         }
 
         if (keyHandler.leftPressed) {
-            x -= speed;
+            x -= keyHandler.sprinting ? (speed * 2) : speed;
             direction = "left";
+            isMoving = true;
         }
 
         if (keyHandler.rightPressed) {
-            x += speed;
+            x += keyHandler.sprinting ? (speed * 2) : speed;
             direction = "right";
+            isMoving = true;
         }
 
-        spriteCounter++;
-        if (spriteCounter > 14) {
-            spriteNum++;
-            if (spriteNum > 4) {
-                spriteNum = 1;
+        if (isMoving) {
+            spriteCounter++;
+            if (spriteCounter > 14) {
+                spriteNum++;
+                if (spriteNum > 4) {
+                    spriteNum = 1;
+                }
+                spriteCounter = 0;
             }
-            spriteCounter = 0;
+        } else {
+            spriteNum = 2; // Assuming spriteNum 2 is the "stand" pose in each direction
         }
     }
 
     public void draw(Graphics2D graphics2D) {
-
         BufferedImage characterImage = null;
 
         switch (direction) {
@@ -105,11 +112,10 @@ public class Player extends Entity{
             case "up":
                 characterImage = (spriteNum == 1) ? up1 : (spriteNum == 2) ? standUp : (spriteNum == 3) ? up2 : standUp;
                 break;
-            case "standing":
-                characterImage = stand;
         }
 
         graphics2D.drawImage(characterImage, x, y, gamePanel.gameTileSize, gamePanel.gameTileSize * 2, null);
     }
+
 
 }
