@@ -29,15 +29,25 @@ public class Player extends Entity{
     }
 
     public void getPlayerImage() {
+        int characterWidth = 16;
+        int characterHeight = 32;
         try {
-            stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterStand.png")));
-            standLeft = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterStandLeft.png")));
-            standRight = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterStandRight.png")));
-            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterWalkFront1.png")));
-            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterWalkFront2.png")));
-            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterWalkLeft1.png")));
-            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/characterWalkRight1.png")));
+            BufferedImage spriteSheet = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/spriteSheet.png")));
+            standLeft = spriteSheet.getSubimage(0,0,characterWidth, characterHeight);
+            left1 = spriteSheet.getSubimage(16,0,characterWidth, characterHeight);
+            left2 = spriteSheet.getSubimage(32,0,characterWidth, characterHeight);
 
+            standRight = spriteSheet.getSubimage(0,32,characterWidth, characterHeight);
+            right1 = spriteSheet.getSubimage(16,32,characterWidth, characterHeight);
+            right2 = spriteSheet.getSubimage(32,32,characterWidth, characterHeight);
+
+            stand = spriteSheet.getSubimage(0,64,characterWidth, characterHeight);
+            down1 = spriteSheet.getSubimage(16,64,characterWidth, characterHeight);
+            down2 = spriteSheet.getSubimage(32,64,characterWidth, characterHeight);
+
+            standUp = spriteSheet.getSubimage(0,96,characterWidth, characterHeight);
+            up1 = spriteSheet.getSubimage(16,96,characterWidth, characterHeight);
+            up2 = spriteSheet.getSubimage(32,96,characterWidth, characterHeight);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -87,10 +97,13 @@ public class Player extends Entity{
                 characterImage = (spriteNum == 1) ? down1 : (spriteNum == 2) ? stand : (spriteNum == 3) ? down2 : stand;
                 break;
             case "left":
-                characterImage = (spriteNum > 2) ? left1 : standLeft;
+                characterImage = (spriteNum == 1) ? left1 : (spriteNum == 2) ? standLeft : (spriteNum == 3) ? left2 : standLeft;
                 break;
             case "right":
-                characterImage = (spriteNum > 2) ? right1 : standRight;
+                characterImage = (spriteNum == 1) ? right1 : (spriteNum == 2) ? standRight : (spriteNum == 3) ? right2 : standRight;
+                break;
+            case "up":
+                characterImage = (spriteNum == 1) ? up1 : (spriteNum == 2) ? standUp : (spriteNum == 3) ? up2 : standUp;
                 break;
             case "standing":
                 characterImage = stand;
