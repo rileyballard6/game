@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
-    final int tileSize = 16;
-    final int scale = 3;
+    public final int tileSize = 16;
+    public final int scale = 3;
 
     public final int gameTileSize = tileSize * scale;
     final int maxScreenCol = 18;
@@ -18,8 +18,9 @@ public class GamePanel extends JPanel implements Runnable {
     final double FPS = 60;
 
     KeyHandler keyHandler = new KeyHandler();
+    MouseHandler mouseHandler = new MouseHandler();
     Thread gameThread;
-    Player mainCharacter = new Player(this, keyHandler);
+    Player mainCharacter = new Player(this, keyHandler, mouseHandler);
 
 
     public GamePanel() {
@@ -28,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+        this.addMouseListener(mouseHandler);
     }
 
     //Instantiates the thread object with the gamePanel object

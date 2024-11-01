@@ -2,6 +2,7 @@ package entities;
 
 import core.GamePanel;
 import core.KeyHandler;
+import core.MouseHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,20 +14,23 @@ public class Player extends Entity{
 
     GamePanel gamePanel;
     KeyHandler keyHandler;
+    MouseHandler mouseHandler;
 
-    public Player(GamePanel gp, KeyHandler kh) {
+    public Player(GamePanel gp, KeyHandler kh, MouseHandler mh) {
         this.gamePanel = gp;
         this.keyHandler = kh;
+        this.mouseHandler = mh;
 
         setEntityValues();
         getPlayerImage();
     }
 
     public void setEntityValues() {
-        x = 100;
-        y = 100;
-        speed = 2;
+        x = gamePanel.gameTileSize * 2; // places the player at 2 tiles over
+        y = gamePanel.gameTileSize * 2; // places the player at 2 tiles down
+        speed = gamePanel.gameTileSize / 16; // or some other scaling approach for speed
     }
+
 
     public void getPlayerImage() {
         int characterWidth = 16;
@@ -57,6 +61,15 @@ public class Player extends Entity{
 
     public void update() {
         boolean isMoving = false;
+
+        if (mouseHandler.click) {
+            if (mouseHandler.mouseX > x && mouseHandler.mouseX < x + gamePanel.gameTileSize) {
+                if (mouseHandler.mouseY > y && mouseHandler.mouseY < (y + gamePanel.gameTileSize * 2)) {
+                    System.out.println("Player clicked!!");
+                }
+            }
+            mouseHandler.click = false;
+        }
 
         if (keyHandler.upPressed) {
             y -= keyHandler.sprinting ? (speed * 2) : speed;
