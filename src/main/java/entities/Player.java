@@ -28,7 +28,7 @@ public class Player extends Entity{
     public void setEntityValues() {
         x = gamePanel.gameTileSize * 2; // places the player at 2 tiles over
         y = gamePanel.gameTileSize * 2; // places the player at 2 tiles down
-        speed = gamePanel.gameTileSize / 16; // or some other scaling approach for speed
+        speed = gamePanel.gameTileSize / 24; // or some other scaling approach for speed
     }
 
 
@@ -37,17 +37,18 @@ public class Player extends Entity{
         int characterHeight = 32;
         try {
             BufferedImage spriteSheet = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/characterSprites/spriteSheet.png")));
-            standLeft = spriteSheet.getSubimage(0,0,characterWidth, characterHeight);
-            left1 = spriteSheet.getSubimage(16,0,characterWidth, characterHeight);
-            left2 = spriteSheet.getSubimage(32,0,characterWidth, characterHeight);
 
-            standRight = spriteSheet.getSubimage(0,32,characterWidth, characterHeight);
-            right1 = spriteSheet.getSubimage(16,32,characterWidth, characterHeight);
-            right2 = spriteSheet.getSubimage(32,32,characterWidth, characterHeight);
+            stand = spriteSheet.getSubimage(0,0,characterWidth, characterHeight);
+            down1 = spriteSheet.getSubimage(16,0,characterWidth, characterHeight);
+            down2 = spriteSheet.getSubimage(32,0,characterWidth, characterHeight);
 
-            stand = spriteSheet.getSubimage(0,64,characterWidth, characterHeight);
-            down1 = spriteSheet.getSubimage(16,64,characterWidth, characterHeight);
-            down2 = spriteSheet.getSubimage(32,64,characterWidth, characterHeight);
+            standLeft = spriteSheet.getSubimage(0,32,characterWidth, characterHeight);
+            left1 = spriteSheet.getSubimage(16,32,characterWidth, characterHeight);
+            left2 = spriteSheet.getSubimage(32,32,characterWidth, characterHeight);
+
+            standRight = spriteSheet.getSubimage(0,64,characterWidth, characterHeight);
+            right1 = spriteSheet.getSubimage(16,64,characterWidth, characterHeight);
+            right2 = spriteSheet.getSubimage(32,64,characterWidth, characterHeight);
 
             standUp = spriteSheet.getSubimage(0,96,characterWidth, characterHeight);
             up1 = spriteSheet.getSubimage(16,96,characterWidth, characterHeight);
