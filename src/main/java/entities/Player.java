@@ -16,18 +16,24 @@ public class Player extends Entity{
     KeyHandler keyHandler;
     MouseHandler mouseHandler;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(GamePanel gp, KeyHandler kh, MouseHandler mh) {
         this.gamePanel = gp;
         this.keyHandler = kh;
         this.mouseHandler = mh;
+
+        screenX = gp.screenWidth / 2 - (gp.gameTileSize/ 2);
+        screenY = gp.screenHeight / 2 - (gp.gameTileSize);
 
         setEntityValues();
         getPlayerImage();
     }
 
     public void setEntityValues() {
-        x = gamePanel.gameTileSize * 2; // places the player at 2 tiles over
-        y = gamePanel.gameTileSize * 2; // places the player at 2 tiles down
+        worldX = gamePanel.gameTileSize * 12; // places the player at 2 tiles over
+        worldY = gamePanel.gameTileSize * 12; // places the player at 2 tiles down
         speed = gamePanel.gameTileSize / 24; // or some other scaling approach for speed
     }
 
@@ -64,8 +70,8 @@ public class Player extends Entity{
         boolean isMoving = false;
 
         if (mouseHandler.click) {
-            if (mouseHandler.mouseX > x && mouseHandler.mouseX < x + gamePanel.gameTileSize) {
-                if (mouseHandler.mouseY > y && mouseHandler.mouseY < (y + gamePanel.gameTileSize * 2)) {
+            if (mouseHandler.mouseX > worldX && mouseHandler.mouseX < worldX + gamePanel.gameTileSize) {
+                if (mouseHandler.mouseY > worldY && mouseHandler.mouseY < (worldY + gamePanel.gameTileSize * 2)) {
                     System.out.println("Player clicked!!");
                 }
             }
@@ -73,25 +79,25 @@ public class Player extends Entity{
         }
 
         if (keyHandler.upPressed) {
-            y -= keyHandler.sprinting ? (speed * 2) : speed;
+            worldY -= keyHandler.sprinting ? (speed * 2) : speed;
             direction = "up";
             isMoving = true;
         }
 
         if (keyHandler.downPressed) {
-            y += keyHandler.sprinting ? (speed * 2) : speed;
+            worldY += keyHandler.sprinting ? (speed * 2) : speed;
             direction = "down";
             isMoving = true;
         }
 
         if (keyHandler.leftPressed) {
-            x -= keyHandler.sprinting ? (speed * 2) : speed;
+            worldX -= keyHandler.sprinting ? (speed * 2) : speed;
             direction = "left";
             isMoving = true;
         }
 
         if (keyHandler.rightPressed) {
-            x += keyHandler.sprinting ? (speed * 2) : speed;
+            worldX += keyHandler.sprinting ? (speed * 2) : speed;
             direction = "right";
             isMoving = true;
         }
@@ -128,7 +134,7 @@ public class Player extends Entity{
                 break;
         }
 
-        graphics2D.drawImage(characterImage, x, y, gamePanel.gameTileSize, gamePanel.gameTileSize * 2, null);
+        graphics2D.drawImage(characterImage, screenX, screenY, gamePanel.gameTileSize, gamePanel.gameTileSize * 2, null);
     }
 
 
